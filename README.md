@@ -63,7 +63,7 @@
 
 3. The iframe is now embedded in this website and can be used to save a card and customer information.
 
-### API: Run Transaction
+### Payment Service: Run Transaction
 1. Follow the steps in the [Getting Started](#getting-started) section.
 
 2. Since our config.php file is now completely setup then open:
@@ -81,7 +81,7 @@
 4. Then launch in your browser:
 	> http://localhost/payment-service-example-php/run_transaction.php
 
-### API: Refund/Void
+### Payment Service: Refund/Void
 1. Follow the steps in the [Getting Started](#getting-started) section.
 
 2. Since our config.php file is now completely setup then open:
@@ -95,36 +95,19 @@
 	> http://localhost/payment-service-example-php/void_transaction.php or
 	> http://localhost/payment-service-example-php/refun_transaction.php
 
-### API: Auth Only
+### Payment Service: Check Kount
 1. Follow the steps in the [Getting Started](#getting-started) section.
 
 2. Since our config.php file is now completely setup then open:
-	> payment-service-example-php\authonly.php
+	> payment-service-example-php\check_kount.php
 
-3. Check or review the following data required in the data query parameters: 
+3. Check or review the following data required in the data query parameters:  
 	* merchantId (string)
-	* amount (number) 
-	* gateway (string)
-	* card_expr_month (month's two digits number example for February: 02)
-	* card_expr_year  (year's two digits number example for 2021: 21)
-	* paymethod (string - the tokenex card token)
-	* or refer here [https://docs.transactionplatform.com/#e240bd5a-aa67-665d-79df-cca5840ffbe3](https://docs.transactionplatform.com/#e240bd5a-aa67-665d-79df-cca5840ffbe3) for complete details
+	* card.cardHolderName (string)
+	* card.lastFour (string)
+	* tokenex.token (string)
+	* data.amount (string)
+	* or refer here [https://docs.transactionplatform.com/#17dfc88f-6b6e-9de6-02f9-549bab5337b9](https://docs.transactionplatform.com/#17dfc88f-6b6e-9de6-02f9-549bab5337b9) for complete details
 
 4. Then launch in your browser:
-	> http://localhost/payment-service-example-php/authonly.php
-
-### API: Capture
-1. Follow the steps in the [Getting Started](#getting-started) section.
-
-2. Since our config.php file is now completely setup then open:
-	> payment-service-example-php\capture_transaction.php
-
-3. Update the transaction reference number provided in the url: 
-	* merchantId (string)
-	* amount (number) 
-	* gateway (string)
-	* transactionReferenceNumber (string)
-	* or refer here [https://docs.transactionplatform.com/#4ed41eeb-4e9a-2553-b658-9fea126dd865](https://docs.transactionplatform.com/#4ed41eeb-4e9a-2553-b658-9fea126dd865) for complete details
-
-4. Then launch in your browser:
-	> http://localhost/payment-service-example-php/capture_transaction.php
+	> http://localhost/payment-service-example-php/check_kount.php

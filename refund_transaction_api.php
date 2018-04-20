@@ -2,25 +2,17 @@
 require_once("config.php");
 
 try {
-    $data = json_encode(array(
-        'merchantId' => '100039',
-        'data' => array(
-            'amount' => '1',
-        ),
-        'gateway' => array (
-            'name' => 'usaepay',
-            'refNumber' => '134497630'
-        )
-    ));
+    $hash = base64_encode($username.":".$password);
 
-    $ch = curl_init($apiurl.'pay/v3/refund');
+    $ch = curl_init($apiurl.'pay/v3/transactions/134306163/refund');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "Authorization: $JWT",
-        "Content-Type: application/json",
-        "Content-Length: " . strlen($data)));
+        //"X-Authorization: $hash",
+        "Content-Type: application/x-www-form-urlencoded"
+    ));
     $result = curl_exec($ch);
     $error = curl_error($ch);
     curl_close($ch);
