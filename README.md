@@ -122,7 +122,7 @@
 
 ## Sample: Transaction Service
 ### Transaction(Using Transaction Id)
-	1. A successful Credit Card transaction or eCheck transaction need be made first.
+	1. A successful Transactions need be made first.
 	
 	2. Launch the sample in your brower:
 	> http://localhost/payment-service-example-php/transaction_GetTransWithId.php

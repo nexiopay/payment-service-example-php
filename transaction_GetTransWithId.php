@@ -19,7 +19,7 @@ try {
 	//echo $data;
 	$basicauth = "Basic ". base64_encode($username . ":" . $password);
 
-    $ch = curl_init($apiurl.'transaction/v3/{{'.$id.'}}');
+    $ch = curl_init($apiurl.'transaction/v3/'.$id);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
     //curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
