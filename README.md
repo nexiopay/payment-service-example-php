@@ -2,6 +2,7 @@
 
 ## Dependencies
 * PHP 5.* up
+* phpeeclib 1.0.13 up (RSA encryption is needed in client side tokenization sample)
 
 ## Getting Started
 1. Clone this repository
@@ -18,96 +19,200 @@
 	* **$merchantID** (The merchant id assigned to you from CMS)
 	* **$username** (Your [dashboard.transactionplatform.com](https://dashboard.transactionplatform.com/) username)
 	* **$password** (Your [dashboard.transactionplatform.com](https://dashboard.transactionplatform.com/) password)
+	* **$tokenex_token** (Your [dashboard.transactionplatform.com](https://dashboard.transactionplatform.com/) tokenex_token)
 
 	If you have questions about any of these variables please contact us via the [Transaction Platform Support Slack Channel](https://transactionplatform.slack.com).
 
-5. Then launch in your browser:
-	> http://localhost/payment-service-example-php/get_jwt.php
+5. Then start your Web Server and launch sample in your browser:
+	> http://localhost/payment-service-example-php/payment_CreditCardTransaction.php
 
-	* This script will output the authorization tokens. One of these is idToken or the JWT which will be used in the next step to create a one time use token. And another one is refreshToken which will be use in refreshing JWT.
-	* Note in our example this script will automatically save values to $JWT and $refreshToken variables in the config.php file which will be used in the next steps.
+	* This script will run a credit card transaction. 
 
-6. Also note that idToken or the JWT expires after an hour and with that we provided a way how we can handle the expiration with the use of refreshToken. Just launch in your browser:
-	> http://localhost/payment-service-example-php/refresh_jwt.php
+## Sample: Client Side Tokenization
+1. Copy Nexio public key into 'payment-service-example-php' folder. 
+	* in this sample, the public key file is named nexiopub.key
 
-	* Note that in our example this script will automatically replace the $JWT and $refreshToken in the config.php file.
+2. Launch the sample in your browser:
+	> http://localhost/payment-service-example-php/ClientSideToken/Client-Side-Token.php
+	* The sample will print out the result of the transaction.
 
-## Use the JWT to Get a One Time Use Token
-1. Since our config.php file is now completely setup then open:
-	> payment-service-example-php\token_request.php
+## Sample: Payment Service iFrame
+### Credit Card Transaction
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/iframe_CreditCardTransaction.php
+	* The sample includes sample of requesting one time token, it calls GetTokenCreditCard.php
+	
+	2. The iframe is now embedded in this website and can be used to process a transaction.
 
-2. Check or review the following data required to get a one time use token: 
-	* data.amount (number)
-	* merchantId (string)
-	* gateway.name (string)(comma separated)
-	* or refer here [https://docs.transactionplatformstg.com/#653fe486-9ed4-9630-ad14-3b4f0c7b5a0f](https://docs.transactionplatform.com/#653fe486-9ed4-9630-ad14-3b4f0c7b5a0f) for more details
+### Save Card 
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/iframe_SaveCard.php
+	* The sample includes sample of requesting one time token, it calls GetTokenSaveCard.php
+	
+	2. The iframe is now embedded in this website and can be used to process a transaction.
 
-3. Then launch in your browser this file:
-	> http://localhost/payment-service-example-php/token_request.php
+### Alipay Transaction
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/iframe_AlipayTransaction.php
+	* The sample includes sample of requesting one time token, it calls GetTokenAlipay.php
+	
+	2. The iframe is now embedded in this website and can be used to process a transaction.
 
-4. This file will print out your one time use token. This token can be used for retrieving the saveCard and makePayment iframes.
+### Save eCheck 
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/iframe_SaveECheck.php
+	* The sample includes sample of requesting one time token, it calls GetTokenSaveECheck.php
+	
+	2. The iframe is now embedded in this website and can be used to process a transaction.
 
-### Iframe Forms: Run Transaction
-1. Follow the steps in the [Getting Started](#getting-started) section.
+### eCheck Transaction
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/iframe_eCheckTransaction.php
+	* The sample includes sample of requesting one time token, it calls GetTokenECheck.php
+	
+	2. The iframe is now embedded in this website and can be used to process a transaction.
 
-2. To load the example iframe for running a transaction visit:  
- 	> [http://localhost/payment-service-example-php/get_iframe.php](http://localhost/payment-service-example-php/get_iframe.php)
+## Sample: Payment Service
+### Save Card
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/payment_SaveCard.php
+	* The sample will print out the result of the transaction.
+	* The token in transaction response will be written into translist.json for Delete Token using
+	
+### Credit Card Transaction
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/payment_CreditCardTransaction.php
+	* The sample will print out the result of the transaction.
+	* The token in transaction response will be written into translist.json for other API using, like Void, Refund, Capture, Get Transaction by original Id etc.
 
-3. The iframe is now embedded in this website and can be used to process a transaction.
+### eCheck Transaction
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/payment_eCheckTransaction.php
+	* The sample will print out the result of the transaction.
+	* The token in transaction response will be written into translist.json or other API using, like Void, Refund, Get Transaction by transaction Id etc.
 
-### Iframe Forms: Save Card
-1. Follow the steps in the [Getting Started](#getting-started) section.
+### Void Transaction
+	1. A successful Credit Card transaction or eCheck transaction need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/payment_VoidTransaction.php
+	* The sample will print out the result of the transaction.
+	
+### Refund Transaction
+	1. A successful Credit Card transaction or eCheck transaction need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/payment_RefundTransaction.php
+	* The sample will print out the result of the transaction.
 
-2. To load the example iframe for saving a card visit:  
- 	> [http://localhost/payment-service-example-php/save_card.php](http://localhost/payment-service-example-php/save_card.php)
+### Capture Transaction
+	1. A successful Credit Card transaction need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/payment_CaptureTransaction.php
+	* The sample will print out the result of the transaction.
 
-3. The iframe is now embedded in this website and can be used to save a card and customer information.
+### Delete Tokens
+	1. A successful Save Card transaction need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/payment_DeleteTokens.php
+	* The sample will print out the result of the transaction.
+	* This sample only delete one token, but actaully multi tokens deleting is supported.
 
-### Payment Service: Run Transaction
-1. Follow the steps in the [Getting Started](#getting-started) section.
+## Sample: Transaction Service
+### Transaction(Using Transaction Id)
+	1. A successful Credit Card transaction or eCheck transaction need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_GetTransWithId.php
+	* The sample will print out the result of the transaction.
 
-2. Since our config.php file is now completely setup then open:
-	> payment-service-example-php\run_transaction.php
+### Transaction
+	1. A successful Transactions need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_GetTrans.php
+	* The sample will print out the result of the transaction.
 
-3. Check or review the following data required in the data query parameters: 
-	* merchantId (string)
-	* amount (number) 
-	* gateway (string)
-	* card_expr_month (month's two digits number example for February: 02)
-	* card_expr_year  (year's two digits number example for 2021: 21)
-	* paymethod (string - the tokenex card token)
-	* or refer here [https://docs.transactionplatform.com/#3c540f64-76db-7f54-adf1-5abadf43bfc8](https://docs.transactionplatform.com/#3c540f64-76db-7f54-adf1-5abadf43bfc8) for complete details
+### Matching Transaction For FDR Chargeback
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_MatchTransForFDR.php
+	* The sample will print out the result of the transaction.
 
-4. Then launch in your browser:
-	> http://localhost/payment-service-example-php/run_transaction.php
+### Transaction Count
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_TransactionCount.php
+	* The sample will print out the result of the transaction.	
+	
+### Daily Transaction Summary
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_DailyTransSummary.php
+	* The sample will print out the result of the transaction.	
 
-### Payment Service: Refund/Void
-1. Follow the steps in the [Getting Started](#getting-started) section.
+### Transaction Total
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_TransactionTotal.php
+	* The sample will print out the result of the transaction.		
 
-2. Since our config.php file is now completely setup then open:
-	> payment-service-example-php\void_transaction.php or 
-	> payment-service-example-php\refund_transaction.php
+### Transaction Summary
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_TransactionSummary.php
+	* The sample will print out the result of the transaction.	
 
-3. Update the transaction reference number provided in the url: 
-	* or refer here [https://docs.transactionplatform.com/#0526a0af-b129-811d-1994-7c104bbad43e](https://https://docs.transactionplatform.com/#0526a0af-b129-811d-1994-7c104bbad43e) for complete details
+### Payment Types
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_PaymentTypes.php
+	* The sample will print out the result of the transaction.	
 
-4. Then launch in your browser:
-	> http://localhost/payment-service-example-php/void_transaction.php or
-	> http://localhost/payment-service-example-php/refun_transaction.php
+### Search Transaction
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_SearchTransaction.php
+	* The sample will print out the result of the transaction.		
+	* This sample does not include any query parameter, but actually, user can pass their own search condition with name 'search'.
 
-### Payment Service: Check Kount
-1. Follow the steps in the [Getting Started](#getting-started) section.
+### Transactions
+	1. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_Transactions.php
+	* The sample will print out the result of the transaction.	
+	* The first transaction record in response will be written into translist.json for later using, like Transaction, Refund, Void, Capture, Bulk Void and Bulk Capture.
 
-2. Since our config.php file is now completely setup then open:
-	> payment-service-example-php\check_kount.php
+### Refund Transaction
+	1. A successful Transactions need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_RefundTransaction.php
+	* The sample will print out the result of the transaction.
+	* The id use in this sample is the id in response of Transactions (transaction-Transactions.php).
 
-3. Check or review the following data required in the data query parameters:  
-	* merchantId (string)
-	* card.cardHolderName (string)
-	* card.lastFour (string)
-	* tokenex.token (string)
-	* data.amount (string)
-	* or refer here [https://docs.transactionplatform.com/#17dfc88f-6b6e-9de6-02f9-549bab5337b9](https://docs.transactionplatform.com/#17dfc88f-6b6e-9de6-02f9-549bab5337b9) for complete details
+### Void Transaction
+	1. A successful Transactions need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_VoidTransaction.php
+	* The sample will print out the result of the transaction.
+	* The id use in this sample is the id in response of Transactions (transaction-Transactions.php).
 
-4. Then launch in your browser:
-	> http://localhost/payment-service-example-php/check_kount.php
+### Capture Transaction
+	1. A successful Transactions need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_CaptureTransaction.php
+	* The sample will print out the result of the transaction.
+	* The id use in this sample is the id in response of Transactions (transaction-Transactions.php).
+
+### Bulk Void Transaction
+	1. A successful Transactions need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_BulkVoid.php
+	* The sample will print out the result of the transaction.
+	* The id use in this sample is the id in response of Transactions (transaction-Transactions.php).
+
+### Bulk Capture Transaction
+	1. A successful Transactions need be made first.
+	
+	2. Launch the sample in your brower:
+	> http://localhost/payment-service-example-php/transaction_BulkCapture.php
+	* The sample will print out the result of the transaction.
+	* The id use in this sample is the id in response of Transactions (transaction-Transactions.php).
