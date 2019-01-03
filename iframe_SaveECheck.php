@@ -4,24 +4,24 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Transactionplatform Save Card Example</title>
+    <title>Save eCheck Transaction Example</title>
     <style>
         .main {
             display: block;
             height: 900px;
             width: 400px;
-            text-align: center;
 
             margin: 10px;
             padding: 15px;
+            text-align: center;
         }
 
         iframe {
             width: 100%;
-            height: 100%;
-            border: none;
+            height: 50%;
+            border: 0;
             display: none;
-            min-height: 620px;
+            min-height: 290px;
         }
 
         #loader {
@@ -30,10 +30,11 @@
 
         .iframe-container {
             border: 2px solid black;
+            text-align: center;
         }
     </style>
 </head>
-<body>
+<body> 
 <div class="main">
 
     <span>Your Website</span>
@@ -60,11 +61,10 @@
 </div>
 
 <script>
-
     const myForm = window.document.getElementById('myForm');
 
-    const saveCardUrl = '<?php echo $apiurl."pay/v3/saveCard"; ?>'
-    const iframeDomain = saveCardUrl.match(/^http(s?):\/\/.*?(?=\/)/)[0];
+    const iframeUrl = '<?php echo $apiurl."pay/v3/saveECheck"; ?>'
+    const iframeDomain = iframeUrl.match(/^http(s?):\/\/.*?(?=\/)/)[0];
 
     window.addEventListener('message', function messageListener(event) {
         if (event.origin === iframeDomain) {
@@ -73,25 +73,27 @@
                 window.document.getElementById('iframe1').style.display = 'block';
                 window.document.getElementById('loader').style.display = 'none';
             }
-            if (event.data.event === 'cardSaved') {
-                console.log('card saved', event.data.data);
+            if (event.data.event === 'eCheckSaved') {
+                console.log('processed transaction', event.data.data);
                 var jsonStr = JSON.stringify(event.data.data, null, 1);
-                window.document.getElementById('forms-container').innerHTML = '<p>Successfully Saved Card.</p><code><br/><code>' + jsonStr + '</code>';
+                window.document.getElementById('forms-container').innerHTML = '<p>Successfully Processed Save eCheck Transaction.</p><code><br/>' + jsonStr + '</code>';
             }
         }
     });
 
     function setup() {
-        fetch('/payment-service-example-php/token_request.php').then(function (response) {
+        //fetch('/payment-service-example-php/token_request.php').then(function (response) {
+		fetch('GetTokenSaveECheck.php').then(function (response) {
+            console.log(response);
             return response.text();
         }).then(function (response) {
-            const iframe = `${saveCardUrl}?token=${response}`;
+            const iframe = `${iframeUrl}?token=${response}`;
             window.document.getElementById('iframe1').src = iframe;
             return window.document.getElementById('iframe1');
         }).then((iframe) => {
             myForm.addEventListener('submit', function processPayment(event) {
                 event.preventDefault();
-                iframe.contentWindow.postMessage('posted', saveCardUrl);
+                iframe.contentWindow.postMessage('posted', iframeUrl);
                 return false;
             });
         }).catch((err) => {

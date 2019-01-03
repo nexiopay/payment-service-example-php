@@ -1,8 +1,9 @@
 <?php
 
-$apiurl = '<APIURL>';
-$merchantId = '<MERCHANTID>';
-$username = '<USERNAME>';
-$password = '<PASSWORD>';
+$apiurl = '<apiurl>';
+$merchantId = '<merchantId>';
+$username = '<username>';
+$password = '<password>';
+$tokenex_token = '<tokenex_token>'
 $JWT = '<JWT>';
 $refreshToken = '<REFRESHTOKEN>';

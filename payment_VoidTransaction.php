@@ -1,28 +1,28 @@
 <?php
 require_once("config.php");
 
-try {
-    $data = json_encode(array(
-        'merchantId' => '100039',
-        'tokenex' => array(
-            'token' => 'eb2f54aa-3ad5-4e93-81d8-b9a255900cd5',
-        ),
-        'data' => array(
-            'amount' => '10.32',
-        ),
-        'card' => array(
-            'cardHolderName' => 'Evz',
-            'lastFour' => '4564'
-        )
-    ));
+function ReadTransList()
+{
+	$filename = 'translist.json';
+	$handle = fopen($filename, 'r');
+    $contents = fread($handle, filesize($filename));
+    fclose($handle);
+    //print $contents;
+	return $contents;
+}
 
-    $ch = curl_init($apiurl.'pay/v3/kount');
+try {
+	$data = ReadTransList();
+	//echo $data;
+	$basicauth = "Basic ". base64_encode($username . ":" . $password);
+
+    $ch = curl_init($apiurl.'pay/v3/void');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Authorization: $JWT",
-        "Content-Type: application/x-www-form-urlencoded",
+        "Authorization: $basicauth",
+        "Content-Type: application/json",
         "Content-Length: " . strlen($data)));
     $result = curl_exec($ch);
     $error = curl_error($ch);
@@ -32,9 +32,14 @@ try {
         echo "CURL Error #: $error";
     } else {
         echo '<pre>';
-        print_r(json_decode($result));
+		$response = json_decode($result);
+		
+        print_r($response);
+		
         echo '</pre>';
     }
 } catch (Exception $e) {
     return $e->getMessage();
 }
+
+

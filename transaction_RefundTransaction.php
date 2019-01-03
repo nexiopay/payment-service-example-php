@@ -1,24 +1,30 @@
 <?php
 require_once("config.php");
 
-try {
-    $data = json_encode(array(
-        'merchantId' => '100039',
-        'data' => array(
-            'amount' => '1',
-        ),
-        'gateway' => array (
-            'name' => 'usaepay',
-            'refNumber' => '134497630'
-        )
-    ));
+function ReadTransList()
+{
+	$filename = 'translist.json';
+	$handle = fopen($filename, 'r');
+    $contents = fread($handle, filesize($filename));
+    fclose($handle);
+    //print $contents;
+	return $contents;
+}
 
-    $ch = curl_init($apiurl.'pay/v3/refund');
+try {
+	$data = ReadTransList();
+	
+	$id = json_decode($data)->id;
+	
+	//echo $data;
+	$basicauth = "Basic ". base64_encode($username . ":" . $password);
+
+    $ch = curl_init($apiurl.'transaction/v3/refund');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Authorization: $JWT",
+        "Authorization: $basicauth",
         "Content-Type: application/json",
         "Content-Length: " . strlen($data)));
     $result = curl_exec($ch);
@@ -29,9 +35,14 @@ try {
         echo "CURL Error #: $error";
     } else {
         echo '<pre>';
-        print_r(json_decode($result));
+		$response = json_decode($result);
+		
+        print_r($response);
+		
         echo '</pre>';
     }
 } catch (Exception $e) {
     return $e->getMessage();
 }
+
+

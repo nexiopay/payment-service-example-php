@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Transactionplatform Portal Example</title>
+    <title>Run Alipay Transaction Example</title>
     <style>
         .main {
             display: block;
@@ -63,7 +63,7 @@
 <script>
     const myForm = window.document.getElementById('myForm');
 
-    const iframeUrl = '<?php echo $apiurl."pay/v3/"; ?>'
+    const iframeUrl = '<?php echo $apiurl."pay/v3/async"; ?>'
     const iframeDomain = iframeUrl.match(/^http(s?):\/\/.*?(?=\/)/)[0];
 
     window.addEventListener('message', function messageListener(event) {
@@ -76,13 +76,14 @@
             if (event.data.event === 'processed') {
                 console.log('processed transaction', event.data.data);
                 var jsonStr = JSON.stringify(event.data.data, null, 1);
-                window.document.getElementById('forms-container').innerHTML = '<p>Successfully Processed Transaction.</p><code><br/>' + jsonStr + '</code>';
+                window.document.getElementById('forms-container').innerHTML = '<p>Successfully Processed Alipay Transaction.</p><code><br/>' + jsonStr + '</code>';
             }
         }
     });
 
     function setup() {
-        fetch('/payment-service-example-php/token_request.php').then(function (response) {
+        //fetch('/payment-service-example-php/token_request.php').then(function (response) {
+		fetch('GetTokenAlipay.php').then(function (response) {
             console.log(response);
             return response.text();
         }).then(function (response) {
