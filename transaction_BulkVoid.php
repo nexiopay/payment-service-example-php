@@ -3,27 +3,25 @@ require_once("config.php");
 
 function ReadTransList()
 {
-	$filename = 'translist.json';
-	$handle = fopen($filename, 'r');
+    $filename = 'translist.json';
+    $handle = fopen($filename, 'r');
     $contents = fread($handle, filesize($filename));
     fclose($handle);
     //print $contents;
-	return $contents;
+    return $contents;
 }
 
 try {
-	$result =json_decode(ReadTransList());
-	
-	//$id = json_decode($data)->id;
-	
-	$data = json_encode(array(
-								'transactionIds' => [$result->id]
-							));
-	
-	
-	$basicauth = "Basic ". base64_encode($username . ":" . $password);
+    $result = json_decode(ReadTransList());
 
-    $ch = curl_init($apiurl.'transaction/v3/void/bulk');
+    $data = json_encode(array(
+        'transactionIds' => [$result->id]
+    ));
+
+
+    $basicauth = "Basic " . base64_encode($username . ":" . $password);
+
+    $ch = curl_init($apiurl . 'transaction/v3/void/bulk');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -39,10 +37,10 @@ try {
         echo "CURL Error #: $error";
     } else {
         echo '<pre>';
-		$response = json_decode($result);
-		
+        $response = json_decode($result);
+
         print_r($response);
-		
+
         echo '</pre>';
     }
 } catch (Exception $e) {

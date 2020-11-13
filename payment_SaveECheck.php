@@ -1,22 +1,20 @@
 <?php
 require_once("config.php");
 
-function ReadTransList()
-{
-    $filename = 'translist.json';
-    $handle = fopen($filename, 'r');
-    $contents = fread($handle, filesize($filename));
-    fclose($handle);
-    //print $contents;
-    return $contents;
-}
-
 try {
-    $data = ReadTransList();
-    //echo $data;
+    $onetimetoken = require_once("GetToken.php");
+    echo $onetimetoken;
+
+    $data = json_encode(array(
+        'token' => $onetimetoken,
+        'bank' => array(
+            'encryptedBankAccountNumber' => 'cu3yRktaYFK2LUC6DpNK289tYDsGRCi7cO+GeG0hkeYFvT7Y8/oY5r53obMz6Q/BZ38gk2u2Ufwy8ojBcX2sfNjG5jplGTXA4NNlSIUjMFfiHe1sff1JFpThoiW/IIlifGlbWu+S1/9pqWPTzJ2+DcjwohbHzsDahhYewFhXgC8qsK0ypi/Shlp+CwRITyIvbVXESD0xz3YOTRHeZLlChvVqN8z4ZzN8nm0MXkmT1wcpYI73bH4KdnPwNU3s7XxvP/ernQP73SHHAOKSLlz4F6AEHFjJiCoXzeLF7LwEjRdxDJ0sKVXbRk3i9BGh+8Nle2VYgjpUWtk2763QkvZiQQ==',
+            'accountHolderName' => 'Jane Doe',
+            'routingNumber' => '231375151'
+        )));
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
-    $ch = curl_init($apiurl . 'pay/v3/deleteToken');
+    $ch = curl_init($apiurl . 'pay/v3/saveECheck');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
