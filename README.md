@@ -16,7 +16,7 @@ or contact [integration support](nexiointegrations.slack.com).
 2. Go to your location of the source directory
 	> cd payment-service-example-php
 
-3. Go to location of the source directory and copy example.config.php. Save it as config.php.
+3. Go to location of the source directory and copy `example.config.php`. Save it as `config.php`.
 	> cp example.config.php config.php
 
 4. Update the following variables in `config.php`
@@ -32,7 +32,7 @@ Update the following variables in `config.php`
 	* **$echeck_token** (A Nexio [e-check token](https://docs.nexiopay.com#save-e-check-token))
 
 ## Examples
-Once you have set up all the [Getting Started](#getting-started) steps you are ready to run any of the following examples.
+Once you have completed the steps listed in [Getting Started](#getting-started), you are ready to run any of the following examples.
 ### Payment Service
 #### API Examples
 ##### Save Card Token
@@ -64,7 +64,7 @@ Once you have set up all the [Getting Started](#getting-started) steps you are r
 	* The sample will print out the result of the transaction.
 	* The payment ID and amount will be saved as `translist.json`.
 	You can use the payment ID to [void](#void-transaction) or [refund](#refund-transaction) the transaction.
-	If the transaction was only [authorized](#authorize-transaction),
+	If the transaction was an [auth-only](#authorize-transaction),
 	you may use the payment ID to [capture](#capture-transaction) the transaction.
 
 ##### Void Transaction
