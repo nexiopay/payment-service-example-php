@@ -3,20 +3,20 @@ require_once("config.php");
 
 function ReadTransList()
 {
-	$filename = 'translist.json';
-	$handle = fopen($filename, 'r');
+    $filename = 'translist.json';
+    $handle = fopen($filename, 'r');
     $contents = fread($handle, filesize($filename));
     fclose($handle);
     //print $contents;
-	return $contents;
+    return $contents;
 }
 
 try {
-	$data = ReadTransList();
-	//echo $data;
-	$basicauth = "Basic ". base64_encode($username . ":" . $password);
+    $data = ReadTransList();
+    //echo $data;
+    $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
-    $ch = curl_init($apiurl.'pay/v3/void');
+    $ch = curl_init($apiurl . 'pay/v3/void');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -32,10 +32,10 @@ try {
         echo "CURL Error #: $error";
     } else {
         echo '<pre>';
-		$response = json_decode($result);
-		
+        $response = json_decode($result);
+
         print_r($response);
-		
+
         echo '</pre>';
     }
 } catch (Exception $e) {

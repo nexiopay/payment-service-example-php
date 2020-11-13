@@ -2,52 +2,9 @@
 require_once("config.php");
 
 try {
-    $data = json_encode(array(
-        'data' => array(
-									'paymentMethod'=>'eCheck',
-									'allowedCardTypes'=>[ 'visa', 'mastercard','discover','amex' ],
-						            'amount' => '1.15',
-									'currency' => 'USD',
-									'description' => 'test purchase',
-									'customFields' => array(
-																				'custom1' => 'hi mom',
-																				'custom2' => 'P#dfk1234kdf'
-																			),
-									'customer' => array(
-																			  'invoice' => '123',
-										                                      'orderNumber' => '456',
-										                                      'customerRef' => '123',
-										                                      'firstName' => 'buck',
-										                                      'lastName' => 'wild',
-										                                      'billToAddressOne' => '123 Street',
-										                                      'billToAddressTwo' => 'Suite 232',
-										                                      'billToCity' => 'Amarillo',
-										                                    	  'billToState' => 'TX',
-										                                      'billToPostal' => '56649',
-										                                      'billToCountry' => 'US'
-																	 ),
-						        ),
-		'processingOptions' => array(
-						                                        'webhookUrl' => '',
-						                                        'webhookFailUrl' => '',
-						                                        'verboseResponse' => true
-						                                  ),
-		'uiOptions' => array(
-		                       	'customTextUrl' => '',
-		                        'displaySubmitButton' => false,
-		                        'hideCvc' => false,
-		                        'requireCvc' => true,
-		                        'hideBilling' => false,
-		                        'limitCountriesTo' => [
-						                                          		'CA', 'MX', 'GB','US'
-						                                        		  ]
-		                     ),
-		'bank' => array(
-									'accountHolderName' => 'Todd Risenmay'
-								 )
-    ));
-	$basicauth = "Basic ". base64_encode($username . ":" . $password);
-    $ch = curl_init($apiurl.'pay/v3/token');
+    $data = json_encode(array());
+    $basicauth = "Basic " . base64_encode($username . ":" . $password);
+    $ch = curl_init($apiurl . 'pay/v3/token');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
