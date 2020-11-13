@@ -1,17 +1,17 @@
 <?php
 require_once("config.php");
+// A one-time-use token is required to save a card token or an e-check token
+// No body parameters are required
 
 try {
-    $data = json_encode(array());
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
     $ch = curl_init($apiurl . 'pay/v3/token');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, '');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "Authorization: $basicauth",
-        "Content-Type: application/json",
-        "Content-Length: " . strlen($data)));
+        "Content-Type: application/json"));
     $result = curl_exec($ch);
     $error = curl_error($ch);
     curl_close($ch);
@@ -20,6 +20,7 @@ try {
         echo "CURL Error #: $error";
     } else {
         echo json_decode($result)->token;
+        return json_decode($result)->token;
     }
 } catch (Exception $e) {
     return $e->getMessage();
