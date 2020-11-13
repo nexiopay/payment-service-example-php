@@ -20,96 +20,77 @@ or contact [integration support](nexiointegrations.slack.com).
 3. Go to location of the source directory and copy example.config.php. Save it as config.php.
 	> cp example.config.php config.php
 
-4. Update the following variables in config.php
+4. Update the following variables in `config.php`
 	* **$apiurl**: (The Nexio API URL)
 	    - Sandbox: https://api.nexiopaysandbox.com/
 	    - Live: https://api.nexiopay.com/
 	* **$username** (Your [dashboard.naxiopay.com](https://dashboard.naxiopay.com/) username)
 	* **$password** (Your [dashboard.naxiopay.com](https://dashboard.naxiopay.com/) password)
-	* **$card_token** (A Nexio [card token](https://docs.nexiopay.com#save-card-token). You may leave this variable blank for now.)
-	* **$echeck_token** (A Nexio [e-check token](https://docs.nexiopay.com#save-e-check-token). You may leave this variable blank for now.)
-
-TODO: -- Reorder examples. They won't have a tokenex token yet, so they should save a card before running transaction. 
-- Redo the examples: to use php -S http://localhost:8000 router.php https://stackoverflow.com/questions/1678010/php-server-on-local-machine
-- Create a simple router as shown in the link above ^
-- try and organize the filenames into folders better.. Maybe save that for later.
+	
+5. Save a [card token](#save-card-token) and an [e-check token](#e-check-token).
+Update the following variables in `config.php`
+    * **$card_token** (A Nexio [card token](https://docs.nexiopay.com#save-card-token))
+	* **$echeck_token** (A Nexio [e-check token](https://docs.nexiopay.com#save-e-check-token))
 
 ## Examples
 Once you have set up all the [Getting Started](#getting-started) steps you are ready to run any of the following examples.
-
 ### Payment Service
 #### API Examples
 ##### Save Card Token
 	1. Launch the sample in your brower:
-	> http://localhost/payment-service-example-php/payment_SaveCard.php
-	* The sample will print out the result of the transaction.
-	* The token in transaction response will be written into translist.json for Delete Token using
+	> php -S localhost:8000 payment_SaveCard.php
+	* The sample will print out the card token.
 	
 ##### Run Card Transaction
-	1. Launch the sample in your brower:
-	> http://localhost/payment-service-example-php/payment_CreditCardTransaction.php
+	1. [Save a card token](#save-card-token)
+	2. Update the `$echeck_token` in `config.php`
+	3. Launch the sample in your brower:
+	> php -S localhost:8000 payment_CreditCardTransaction.php
 	* The sample will print out the result of the transaction.
-	* The token in transaction response will be written into translist.json for other API using, like Void, Refund, Capture, Get Transaction by original Id etc.
+	* The payment ID and amount will be saved as `translist.json`.
+	You can use the payment ID to [void](#void-transaction) or [refund](#refund-transaction) the transaction.
+	If the transaction was only [authorized](#authorize-transaction),
+	you may use the payment ID to [capture](#capture-transaction) the transaction.
 
 ##### Save E-check Token
+	1. Launch the sample in your brower:
+	> php -S localhost:8000 payment_SaveECheck.php
+	* The sample will print out the e-check token.
 
 ##### E-check Transaction 
->>>>>>>>> Can't do this without an e-check token
-	1. Launch the sample in your brower:
-	> http://localhost/payment-service-example-php/payment_eCheckTransaction.php
+	1. [Save an e-check token](#save-e-check-token)
+	2. Update the `$echeck_token` in `config.php`
+	3. Launch the sample in your brower:
+	> php -S localhost:8000 payment_eCheckTransaction.php
 	* The sample will print out the result of the transaction.
-	* The token in transaction response will be written into translist.json or other API using, like Void, Refund, Get Transaction by transaction Id etc.
+	* The payment ID and amount will be saved as `translist.json`.
+	You can use the payment ID to [void](#void-transaction) or [refund](#refund-transaction) the transaction.
+	If the transaction was only [authorized](#authorize-transaction),
+	you may use the payment ID to [capture](#capture-transaction) the transaction.
 
 ##### Void Transaction
-	1. A successful Credit Card transaction or eCheck transaction need be made first.
-	
+	1. Run a [card transaction](#run-card-transaction) or an [e-check transaction](#run-e-check-transaction)
 	2. Launch the sample in your brower:
-	> http://localhost/payment-service-example-php/payment_VoidTransaction.php
+	> php -S localhost:8000 payment_VoidTransaction.php
 	* The sample will print out the result of the transaction.
 	
 ##### Refund Transaction
-	1. A successful Credit Card transaction or eCheck transaction need be made first.
-	
+	1. Run a [card transaction](#run-card-transaction) or an [e-check transaction](#run-e-check-transaction)
 	2. Launch the sample in your brower:
-	> http://localhost/payment-service-example-php/payment_RefundTransaction.php
+	> php -S localhost:8000 payment_RefundTransaction.php
 	* The sample will print out the result of the transaction.
 
 ##### Capture Transaction
-	1. A successful Credit Card transaction need be made first.
-	
+	1. Run an auth-only [card transaction](#run-card-transaction)
 	2. Launch the sample in your brower:
-	> http://localhost/payment-service-example-php/payment_CaptureTransaction.php
+	> php -S localhost:8000 payment_CaptureTransaction.php
 	* The sample will print out the result of the transaction.
 
 ##### Delete Tokens
-	1. A successful Save Card transaction need be made first.
-	
+	1. Save a [card token](#save-card-token)
 	2. Launch the sample in your brower:
-	> http://localhost/payment-service-example-php/payment_DeleteTokens.php
-	* The sample will print out the result of the transaction.
-	* This sample only delete one token, but actaully multi tokens deleting is supported.
-	
-##### Check Kount
-1. Follow the steps in the [Getting Started](#getting-started) section.
-
-2. Since our config.php file is now completely setup then open:
-	> payment-service-example-php\check_kount.php
-
-3. Check or review the following data required in the data query parameters:  
-	* merchantId (string)
-	* card.cardHolderName (string)
-	* card.lastFour (string)
-	* tokenex.token (string)
-	* data.amount (string)
-	* or refer here [https://docs.naxiopay.com/#17dfc88f-6b6e-9de6-02f9-549bab5337b9](https://docs.naxiopay.com/#17dfc88f-6b6e-9de6-02f9-549bab5337b9) for complete details
-
-4. Then launch in your browser:
-	> http://localhost/payment-service-example-php/check_kount.php
-
-5. Start your web server and launch sample in your browser:
-	> http://localhost/payment-service-example-php/payment_CreditCardTransaction.php
-
-	* This script will run a credit card transaction. 
+	> php -S localhost:8000 payment_DeleteTokens.php
+	* This example only deletes one token, but note that you may also delete multiple tokens simultaneously
 
 ## Example: Client Side Tokenization
 1. Copy Nexio public key into 'payment-service-example-php' folder. 

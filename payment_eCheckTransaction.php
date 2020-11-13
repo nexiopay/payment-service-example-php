@@ -4,7 +4,7 @@ require_once("config.php");
 try {
     $data = json_encode(array(
         'tokenex' => array(
-            'token' => $tokenex_token
+            'token' => $echeck_token
         ),
         'bank' => array(
             'accountHolderName' => 'Test Name',

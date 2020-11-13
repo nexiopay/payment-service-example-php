@@ -5,7 +5,7 @@ try {
     $data = json_encode(array(
         'isAuthOnly' => true,
         'tokenex' => array(
-            'token' => $tokenex_token,
+            'token' => $card_token,
             'firstSix' => '123',
             'lastFour' => '1234'
         ),
@@ -84,7 +84,7 @@ try {
 
         echo '</pre>';
 
-        //write trans id and amount into translist.json
+        //write payment id and amount into translist.json
         $translist = array(
             'data' => array(
                 'amount' => $response->amount
