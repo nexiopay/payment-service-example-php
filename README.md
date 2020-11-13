@@ -8,7 +8,6 @@ or contact [integration support](nexiointegrations.slack.com).
 ## Dependencies
 * PHP 5.* up
 * phpseclib 1.0.13 up (RSA encryption is needed in client-side tokenization sample)
--- We're missing a dependency. these commands don't work http://localhost/payment-service-example-php/ClientSideToken/Client-Side-Token.php
 
 ## Getting Started
 1. Clone this repository
