@@ -12,12 +12,9 @@ function ReadTransList()
 
 try {
     $result = json_decode(ReadTransList());
-
     $data = json_encode(array(
         'id' => $result->id
     ));
-
-
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
     $ch = curl_init($apiurl . 'transaction/v3/void');
@@ -37,9 +34,7 @@ try {
     } else {
         echo '<pre>';
         $response = json_decode($result);
-
         print_r($response);
-
         echo '</pre>';
     }
 } catch (Exception $e) {

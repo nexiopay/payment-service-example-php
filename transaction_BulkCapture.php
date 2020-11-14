@@ -7,19 +7,14 @@ function ReadTransList()
     $handle = fopen($filename, 'r');
     $contents = fread($handle, filesize($filename));
     fclose($handle);
-    //print $contents;
     return $contents;
 }
 
 try {
     $result = json_decode(ReadTransList());
-
-    //$id = json_decode($data)->id;
-
     $data = json_encode(array(
         'transactionIds' => [$result->id]
     ));
-
 
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
@@ -40,9 +35,7 @@ try {
     } else {
         echo '<pre>';
         $response = json_decode($result);
-
         print_r($response);
-
         echo '</pre>';
     }
 } catch (Exception $e) {

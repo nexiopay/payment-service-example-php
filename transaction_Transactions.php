@@ -12,9 +12,7 @@ function ReadTransList()
 
 try {
     $data = ReadTransList();
-
     $id = json_decode($data)->id;
-
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
     $ch = curl_init($apiurl . 'transaction/v3');
@@ -33,7 +31,6 @@ try {
         echo '<pre>';
         $response = json_decode($result);
         print_r($response);
-
         echo '</pre>';
 
         //write the first trans id and amount into translist.json

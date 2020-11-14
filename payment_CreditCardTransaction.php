@@ -81,7 +81,6 @@ try {
         echo '<pre>';
         $response = json_decode($result);
         print_r($response);
-
         echo '</pre>';
 
         //write payment id and amount into translist.json

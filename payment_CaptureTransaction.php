@@ -7,13 +7,11 @@ function ReadTransList()
     $handle = fopen($filename, 'r');
     $contents = fread($handle, filesize($filename));
     fclose($handle);
-    //print $contents;
     return $contents;
 }
 
 try {
     $data = ReadTransList();
-    //echo $data;
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
     $ch = curl_init($apiurl . 'pay/v3/capture');
@@ -33,9 +31,7 @@ try {
     } else {
         echo '<pre>';
         $response = json_decode($result);
-
         print_r($response);
-
         echo '</pre>';
     }
 } catch (Exception $e) {

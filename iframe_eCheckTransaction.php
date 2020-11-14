@@ -34,7 +34,7 @@
         }
     </style>
 </head>
-<body> 
+<body>
 <div class="main">
 
     <span>Your Website</span>
@@ -62,8 +62,7 @@
 
 <script>
     const myForm = window.document.getElementById('myForm');
-
-    const iframeUrl = '<?php echo $apiurl."pay/v3/processECheck"; ?>'
+    const iframeUrl = '<?php echo $apiurl."pay/v3/processECheck"; ?>';
     const iframeDomain = iframeUrl.match(/^http(s?):\/\/.*?(?=\/)/)[0];
 
     window.addEventListener('message', function messageListener(event) {
@@ -82,7 +81,6 @@
     });
 
     function setup() {
-        //fetch('/payment-service-example-php/token_request.php').then(function (response) {
 		fetch('GetTokenECheck.php').then(function (response) {
             console.log(response);
             return response.text();
@@ -104,7 +102,7 @@
         });
     }
 
-    setup()
+    setup();
 </script>
 </body>
 </html>

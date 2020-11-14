@@ -17,7 +17,6 @@ try {
         'id' => $result->id
     ));
 
-
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
     $ch = curl_init($apiurl . 'transaction/v3/capture');
@@ -37,9 +36,7 @@ try {
     } else {
         echo '<pre>';
         $response = json_decode($result);
-
         print_r($response);
-
         echo '</pre>';
     }
 } catch (Exception $e) {

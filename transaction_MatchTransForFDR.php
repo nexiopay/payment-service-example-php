@@ -12,9 +12,7 @@ function ReadTransList()
 
 try {
     $data = ReadTransList();
-
     $id = json_decode($data)->id;
-
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
     $ch = curl_init($apiurl . 'transaction/v3/getMatchingTransactionForFDRChargeback?authCode=230194&transactionDate=27/11/2018&cardNumber=1234');
@@ -32,9 +30,7 @@ try {
     } else {
         echo '<pre>';
         $response = json_decode($result);
-
         print_r($response);
-
         echo '</pre>';
     }
 } catch (Exception $e) {
