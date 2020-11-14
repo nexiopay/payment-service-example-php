@@ -1,9 +1,9 @@
 <?php
 require_once("config.php");
 
-function ReadTransList()
+function ReadTokenList()
 {
-    $filename = 'translist.json';
+    $filename = 'tokenlist.json';
     $handle = fopen($filename, 'r');
     $contents = fread($handle, filesize($filename));
     fclose($handle);
@@ -11,7 +11,7 @@ function ReadTransList()
 }
 
 try {
-    $data = ReadTransList();
+    $data = ReadTokenList();
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
     $ch = curl_init($apiurl . 'pay/v3/deleteToken');

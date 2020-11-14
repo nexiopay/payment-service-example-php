@@ -1,6 +1,7 @@
 <?php
 require_once("config.php");
 
+// Get most recent payment ID as stored in `translist.json
 function ReadTransList()
 {
     $filename = 'translist.json';

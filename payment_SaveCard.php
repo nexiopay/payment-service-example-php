@@ -37,6 +37,14 @@ try {
         $response = json_decode($result);
         print_r($response);
         echo '</pre>';
+
+        // write card token into tokenlist.json
+        $tokenList = array(
+            'tokens' =>[$response->token->token]
+        );
+        $fp = fopen('tokenlist.json', 'w');
+        fwrite($fp, json_encode($tokenList));
+        fclose($fp);
     }
 } catch (Exception $e) {
     return $e->getMessage();
