@@ -34,36 +34,27 @@
         }
     </style>
 </head>
-<body> 
+<body>
 <div class="main">
-
     <span>Your Website</span>
-
-    <br/><br/>
-
-    <div id="errors-container" style="display:  none, margin-top: 10px; margin-bottom: 10px; "></div>
-
+    <br><br>
+    <div id="errors-container" style="display:  none; margin-top: 10px; margin-bottom: 10px;"></div>
     <div id="forms-container">
         <div class="iframe-container">
             <span>Our Iframe</span>
             <iframe id="iframe1"></iframe>
         </div>
-
-        <br/><br/>
-
+        <br><br>
         <div id="loader">Loading Form...</div>
-
         <form id="myForm">
-            <button id="submitme">Submit Form</button>
+            <button id="submit">Submit Form</button>
         </form>
     </div>
-
 </div>
 
 <script>
     const myForm = window.document.getElementById('myForm');
-
-    const iframeUrl = '<?php echo $apiurl."pay/v3/"; ?>'
+    const iframeUrl = '<?php echo $apiurl."pay/v3/"; ?>';
     const iframeDomain = iframeUrl.match(/^http(s?):\/\/.*?(?=\/)/)[0];
 
     window.addEventListener('message', function messageListener(event) {
@@ -82,7 +73,6 @@
     });
 
     function setup() {
-        //fetch('/payment-service-example-php/token_request.php').then(function (response) {
 		fetch('GetTokenCreditCard.php').then(function (response) {
             console.log(response);
             return response.text();
@@ -103,8 +93,7 @@
             window.document.getElementById('errors-container').style.display = 'block';
         });
     }
-
-    setup()
+    setup();
 </script>
 </body>
 </html>

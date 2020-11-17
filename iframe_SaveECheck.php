@@ -10,7 +10,6 @@
             display: block;
             height: 900px;
             width: 400px;
-
             margin: 10px;
             padding: 15px;
             text-align: center;
@@ -34,25 +33,18 @@
         }
     </style>
 </head>
-<body> 
+<body>
 <div class="main">
-
     <span>Your Website</span>
-
-    <br/><br/>
-
+    <br><br>
     <div id="errors-container" style="display:  none, margin-top: 10px; margin-bottom: 10px; "></div>
-
     <div id="forms-container">
         <div class="iframe-container">
             <span>Our Iframe</span>
             <iframe id="iframe1"></iframe>
         </div>
-
-        <br/><br/>
-
+        <br><br>
         <div id="loader">Loading Form...</div>
-
         <form id="myForm">
             <button id="submitme">Submit Form</button>
         </form>
@@ -62,8 +54,7 @@
 
 <script>
     const myForm = window.document.getElementById('myForm');
-
-    const iframeUrl = '<?php echo $apiurl."pay/v3/saveECheck"; ?>'
+    const iframeUrl = '<?php echo $apiurl."pay/v3/saveECheck"; ?>';
     const iframeDomain = iframeUrl.match(/^http(s?):\/\/.*?(?=\/)/)[0];
 
     window.addEventListener('message', function messageListener(event) {
@@ -76,13 +67,12 @@
             if (event.data.event === 'eCheckSaved') {
                 console.log('processed transaction', event.data.data);
                 var jsonStr = JSON.stringify(event.data.data, null, 1);
-                window.document.getElementById('forms-container').innerHTML = '<p>Successfully Processed Save eCheck Transaction.</p><code><br/>' + jsonStr + '</code>';
+                window.document.getElementById('forms-container').innerHTML = '<p>Successfully Processed Save eCheck Transaction.</p><code><br>' + jsonStr + '</code>';
             }
         }
     });
 
     function setup() {
-        //fetch('/payment-service-example-php/token_request.php').then(function (response) {
 		fetch('GetTokenSaveECheck.php').then(function (response) {
             console.log(response);
             return response.text();
@@ -104,7 +94,7 @@
         });
     }
 
-    setup()
+    setup();
 </script>
 </body>
 </html>

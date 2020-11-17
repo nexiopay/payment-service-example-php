@@ -59,9 +59,7 @@ try {
     } else {
         echo '<pre>';
         $response = json_decode($result);
-
         print_r($response);
-
         echo '</pre>';
 
         //write trans id and amount into translist.json

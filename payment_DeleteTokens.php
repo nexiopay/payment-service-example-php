@@ -1,19 +1,17 @@
 <?php
 require_once("config.php");
 
-function ReadTransList()
+function ReadTokenList()
 {
-    $filename = 'translist.json';
+    $filename = 'tokenlist.json';
     $handle = fopen($filename, 'r');
     $contents = fread($handle, filesize($filename));
     fclose($handle);
-    //print $contents;
     return $contents;
 }
 
 try {
-    $data = ReadTransList();
-    //echo $data;
+    $data = ReadTokenList();
     $basicauth = "Basic " . base64_encode($username . ":" . $password);
 
     $ch = curl_init($apiurl . 'pay/v3/deleteToken');
@@ -33,9 +31,7 @@ try {
     } else {
         echo '<pre>';
         $response = json_decode($result);
-
         print_r($response);
-
         echo '</pre>';
     }
 } catch (Exception $e) {
